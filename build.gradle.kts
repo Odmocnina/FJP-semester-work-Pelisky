@@ -1,6 +1,7 @@
 plugins {
-    id("java")
+    java
     antlr
+    id("com.gradleup.shadow") version "9.6.1"
 }
 
 group = "cz.zcu"
@@ -15,7 +16,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     antlr("org.antlr:antlr4:4.13.1")
-    //implementation("org.antlr:antlr4-runtime:4.13.1")
 }
 
 tasks.test {
