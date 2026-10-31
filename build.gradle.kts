@@ -22,11 +22,6 @@ tasks.test {
     useJUnitPlatform()
 }
 
-tasks.generateGrammarSource {
-    // Přičteme k aktuálním argumentům naše dva nové
-    arguments = arguments + listOf("-visitor", "-no-listener")
-}
-
 tasks.jar {
     manifest {
         attributes (
