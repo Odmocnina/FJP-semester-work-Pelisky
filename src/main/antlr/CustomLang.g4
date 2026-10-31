@@ -67,14 +67,14 @@ param
 // ============================== Commands ================================
 
 statement
-    : varDecl     // assigment and declaration of new
-    | idStat   // assigment of existing and calling of function
-    | forStat     // for cycle
-    | whileStat  // while cycle
-    | doWhileStat   // do while cycle
-    | repeatStat   // repeat cycle
-    | ifStat     // if condition
-    | returnStat  // return from fnc
+    : varDecl		# declStatement		// assigment and declaration of new
+    | idStat		# idStatement		// assigment of existing and calling of function
+    | forStat		#forStatement		// for cycle
+    | whileStat		#whileStatement		// while cycle
+    | doWhileStat	#doWhileStatement	// do while cycle
+    | repeatStat	#repeatStatement	// repeat cycle
+    | ifStat		#ifStatement		// if condition
+    | returnStat	#returnStatement	// return from fnc
     ;
 
 varDecl
@@ -142,19 +142,14 @@ type
 
 // expressions
 expr
-    : prefixOp LPAREN expr COMMA expr RPAREN  // Binary op +(2, 2) or <(a, b)
-    | NEGATION LPAREN expr RPAREN                  // negation
-    | ID ( LPAREN argList? RPAREN )?              // call of function or a variable: myFunc(1, 2), its united so that it doesnt do collisions
-    | MINUS ( LPAREN expr COMMA expr RPAREN | expr )    // minus: -5 or -+(2, 2)
-    | INT_LITERAL                             // numbers, text, booleans
-    | REAL_LITERAL
-    | STRING_LITERAL
-    | BOOL_LITERAL
-    ;
-
-// prefix calling of the operators +(a, 8) or <(i, 10)
-prefixExpr
-    : prefixOp LPAREN expr COMMA expr RPAREN
+    : prefixOp LPAREN expr COMMA expr RPAREN	#prefixExpr			// Binary op +(2, 2) or <(a, b)
+    | NEGATION LPAREN expr RPAREN				#negationExpr		// negation
+    | ID ( LPAREN argList? RPAREN )?   			#callExpr			// call of function or a variable: myFunc(1, 2), its united so that it doesnt do collisions
+    | MINUS ( LPAREN expr COMMA expr RPAREN | expr )  #minusExpr	// minus: -5 or -+(2, 2)
+    | INT_LITERAL								#intLitExpr			// numbers, text, booleans
+    | REAL_LITERAL								#realLitExpr
+    | STRING_LITERAL 							#strLitExpr
+    | BOOL_LITERAL 								#boolLitExpr
     ;
 
 prefixOp
