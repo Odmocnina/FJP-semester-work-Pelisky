@@ -35,5 +35,7 @@ tasks.jar {
     }
 }
 
-
-
+tasks.generateGrammarSource {
+    // my chceme Visitor pro lepsi kontrolu, listener je pak jen zbytecne navic
+    arguments = arguments + listOf("-visitor", "-no-listener")
+}
