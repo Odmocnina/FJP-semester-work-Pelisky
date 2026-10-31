@@ -2,6 +2,7 @@ package cz.zcu;
 
 import cz.zcu.CustomLangParser;
 import cz.zcu.CustomLangLexer;
+import cz.zcu.visitor.PeliskyDummyVisitor;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.*;
@@ -26,12 +27,14 @@ public class Main {
 
     static void main() throws Exception {
         // create a stream of the code from our code file
-        CharStream input = CharStreams.fromString("Program HelloWorld;\n" +
-                "\n" +
-                "Code {\n" +
-                "    WriteLn(\"Hello World!\");\n" +
-                "    ReadLn();\n" +
-                "}");
+        CharStream input = CharStreams.fromString("""
+				Program HelloWorld;
+				
+				Code {
+				    WriteLn("Hello World!");
+				    ReadLn();
+				    var int a := +(1, 2);
+				}""");
 
         // make a tokes from our input code
         CustomLangLexer lexer = new CustomLangLexer(input);
@@ -51,6 +54,11 @@ public class Main {
             System.out.println("Starting to parse...");
             // cretate the tree from our code
             ParseTree tree = parser.program();
+
+            // any visitor can be attached like so
+            PeliskyDummyVisitor visitor = new PeliskyDummyVisitor();
+            visitor.visit(tree);
+
             // print the tree
             System.out.println("Parsing finised!");
             System.out.println(tree.toStringTree());
