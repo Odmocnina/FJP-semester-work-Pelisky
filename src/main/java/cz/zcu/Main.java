@@ -1,6 +1,7 @@
 package cz.zcu;
 
 import cz.zcu.CustomLangParser;
+import cz.zcu.CustomLangLexer;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.*;
