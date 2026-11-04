@@ -11,8 +11,8 @@ public class BlockNode implements IAstNode {
     /**
      * Function for checking the semantic of the block of code, checks the semantic of all commands in it
      *
-     * @param scope
-     * @throws Exception
+     * @param scope the current scope for analysis
+     * @throws Exception if an error occurs during analysis
      **/
     @Override
     public void analyze(Object scope) throws Exception {
@@ -25,8 +25,8 @@ public class BlockNode implements IAstNode {
     /**
      * Function for generation of the PL/0 assembler instructions
      *
-     * @param scope
-     * @param generator
+     * @param scope the current scope for code generation
+     * @param generator the code generator to use
      **/
     @Override
     public void generate(Object scope, Object generator) {

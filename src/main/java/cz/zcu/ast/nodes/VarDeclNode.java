@@ -25,7 +25,9 @@ public class VarDeclNode implements IAstNode {
     }
 
     /**
-     * Semantic analyzation
+     * Analyzes the variable declaration node by checking its type, name, and expression.
+     * @param scope the current scope for analysis
+     * @throws Exception if an error occurs during analysis
      **/
     @Override
     public void analyze(Object scope) throws Exception {
@@ -37,6 +39,7 @@ public class VarDeclNode implements IAstNode {
      *
      * @param scope
      * @param generator
+     * @throws Exception if an error occurs during code generation
      **/
     @Override
     public void generate(Object scope, Object generator) {
