@@ -1,5 +1,12 @@
 package cz.zcu.ast.nodes;
 
+/*********************************************
+ * Interface representing a node in the abstract syntax tree (AST). Every node in the AST should implement this
+ * interface to provide methods for semantic analysis and code generation.
+ *
+ * @author Michael Hladky, Victor Verner
+ * @version 1.0
+ ********************************************/
 public interface IAstNode {
 
     /**
@@ -8,7 +15,7 @@ public interface IAstNode {
      * @param scope the current scope for analysis
      * @throws Exception if an error occurs during analysis
      **/
-    public abstract void analyze(Object scope) throws Exception;
+    void analyze(Object scope) throws Exception;
 
     /**
      * Generates code for the AST node within the given scope using the provided code generator.
@@ -16,6 +23,6 @@ public interface IAstNode {
      * @param scope the current scope for code generation
      * @param generator the code generator to use
      **/
-    public abstract void generate(Object scope, Object generator);
+    void generate(Object scope, Object generator);
 
 }

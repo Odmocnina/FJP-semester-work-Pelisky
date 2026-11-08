@@ -2,6 +2,13 @@ package cz.zcu.ast.nodes;
 
 import java.util.List;
 
+/********************************************
+ * Represents a function or procedure call in the abstract syntax tree (AST).
+ * This node contains the name of the function or procedure being called and a list of arguments passed to it.
+ *
+ * @author Michael Hladky, Victor Verner
+ * @version 1.0
+ ********************************************/
 public class CallNode implements IAstNode {
 
     /** the name of the function or procedure being called **/

@@ -1,5 +1,12 @@
 package cz.zcu.ast.nodes;
 
+/********************************************
+ * Represents a string node in the abstract syntax tree (AST).
+ * This node contains a string value.
+ *
+ * @author Michael Hladky, Victor Verner
+ * @version 1.0
+ ********************************************/
 public class StringNode implements IAstNode {
 
     /** the string value of this node **/

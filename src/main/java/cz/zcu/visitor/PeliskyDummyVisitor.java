@@ -10,7 +10,7 @@ import cz.zcu.CustomLangParser;
 public class PeliskyDummyVisitor extends CustomLangBaseVisitor<Void> {
 	@Override
 	public Void visitPrefixExpr(CustomLangParser.PrefixExprContext ctx) {
-		System.out.printf("Visiting a prefix expression!: '%s', with  arguments: '%s' and '%s'\n", ctx.prefixOp().getText(), ctx.expr(0), ctx.expr(1));
+	//	System.out.printf("Visiting a prefix expression!: '%s', with  arguments: '%s' and '%s'\n", ctx.prefixOp().getText(), ctx.expr(0), ctx.expr(1));
 		return super.visitPrefixExpr(ctx);
 	}
 

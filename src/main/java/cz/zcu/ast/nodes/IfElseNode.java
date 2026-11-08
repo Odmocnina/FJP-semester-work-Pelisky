@@ -1,5 +1,13 @@
 package cz.zcu.ast.nodes;
 
+/********************************************
+ * Represents an if-else statement in the abstract syntax tree (AST).
+ * This node contains the condition, the block of commands to execute if the condition is true,
+ * and an optional block of commands to execute if the condition is false.
+ *
+ * @author Michael Hladky, Victor Verner
+ * @version 1.0
+ ********************************************/
 public class IfElseNode implements IAstNode {
 
     /** condition for if **/

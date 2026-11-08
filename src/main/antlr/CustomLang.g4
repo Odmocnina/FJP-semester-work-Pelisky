@@ -142,7 +142,7 @@ type
 
 // expressions
 expr
-    : prefixOp LPAREN expr COMMA expr RPAREN	#prefixExpr			// Binary op +(2, 2) or <(a, b)
+    : prefixOp LPAREN argList RPAREN            #prefixExpr			// Binary op +(2, 2) or <(a, b)
     | NEGATION LPAREN expr RPAREN				#negationExpr		// negation
     | ID ( LPAREN argList? RPAREN )?   			#callExpr			// call of function or a variable: myFunc(1, 2), its united so that it doesnt do collisions
     | MINUS ( LPAREN expr COMMA expr RPAREN | expr )  #minusExpr	// minus: -5 or -+(2, 2)

@@ -3,6 +3,13 @@ package cz.zcu.ast.nodes;
 import java.util.ArrayList;
 import java.util.List;
 
+/********************************************
+ * Represents a block of code in the abstract syntax tree (AST).
+ * This node contains a list of statements that are part of the block.
+ *
+ * @author Michael Hladky, Victor Verner
+ * @version 1.0
+ ********************************************/
 public class BlockNode implements IAstNode {
 
     /** List of commands that are in the block **/

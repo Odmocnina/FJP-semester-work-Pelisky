@@ -1,5 +1,12 @@
 package cz.zcu.ast.nodes;
 
+/********************************************
+ * Represents a for loop in the abstract syntax tree (AST).
+ * This node contains the iterator variable name, initial expression, end expression, and the body of the loop.
+ *
+ * @author Michael Hladky, Victor Verner
+ * @version 1.0
+ ********************************************/
 public class ForNode implements IAstNode {
 
     /** name of the variable **/

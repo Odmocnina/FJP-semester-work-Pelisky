@@ -1,5 +1,13 @@
 package cz.zcu.ast.nodes;
 
+/********************************************
+ * Represents a program node in the abstract syntax tree (AST).
+ * This node contains the name of the program and its code block. This is the declaration of the program name at the
+ * beginning of the program, and the code block contains all the commands that are part of the program.
+ *
+ * @author Michael Hladky, Victor Verner
+ * @version 1.0
+ ********************************************/
 public class ProgramNode implements IAstNode {
 
     /** name of the program (string after program key word) **/

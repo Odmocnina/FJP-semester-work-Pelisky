@@ -1,5 +1,12 @@
 package cz.zcu.ast.nodes;
 
+/********************************************
+ * Represents a while loop node in the abstract syntax tree (AST).
+ * This node contains the condition for the while loop and the body of commands to execute while the condition is true.
+ *
+ * @author Michael Hladky, Victor Verner
+ * @version 1.0
+ ********************************************/
 public class WhileNode implements IAstNode {
 
     /** condition for while **/

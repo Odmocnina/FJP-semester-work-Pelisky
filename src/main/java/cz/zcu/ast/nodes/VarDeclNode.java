@@ -1,5 +1,12 @@
 package cz.zcu.ast.nodes;
 
+/********************************************
+ * Represents a variable declaration node in the abstract syntax tree (AST).
+ * This node contains the type, name, and optional assignment expression for a variable.
+ *
+ * @author Michael Hladky, Victor Verner
+ * @version 1.0
+ ********************************************/
 public class VarDeclNode implements IAstNode {
 
     /** type of the variable **/
@@ -37,8 +44,8 @@ public class VarDeclNode implements IAstNode {
     /**
      * Function for generation of the PL/0 assembler instructions
      *
-     * @param scope
-     * @param generator
+     * @param scope the current scope for code generation
+     * @param generator the code generator to use
      * @throws Exception if an error occurs during code generation
      **/
     @Override
