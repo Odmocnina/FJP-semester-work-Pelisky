@@ -1,5 +1,7 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.symboltable.SymbolTable;
+
 /********************************************
  * Represents a while loop node in the abstract syntax tree (AST).
  * This node contains the condition for the while loop and the body of commands to execute while the condition is true.
@@ -29,23 +31,23 @@ public class WhileNode implements IAstNode {
     /**
      * Analyzes the while node by analyzing its condition and body.
      *
-     * @param scope the current scope for analysis
+     * @param tableOfCurrentScope the current scope for analysis
      * @throws Exception if an error occurs during analysis
      **/
     @Override
-    public void analyze(Object scope) throws Exception {
-        condition.analyze(scope); // check if condition is ok
-        body.analyze(scope);     // check if the code inside is ok
+    public void analyze(SymbolTable.Scope tableOfCurrentScope) throws Exception {
+        condition.analyze(tableOfCurrentScope); // check if condition is ok
+        body.analyze(tableOfCurrentScope);     // check if the code inside is ok
     }
 
     /**
      * Generates code for the while node by generating code for its condition and body.
      *
-     * @param scope the current scope for code generation
+     * @param tableOfCurrentScope the current scope for code generation
      * @param generator the code generator to use
      **/
     @Override
-    public void generate(Object scope, Object generator) {
+    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
 
     }
 }

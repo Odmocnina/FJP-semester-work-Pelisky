@@ -1,5 +1,7 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.symboltable.SymbolTable;
+
 /********************************************
  * Represents a program node in the abstract syntax tree (AST).
  * This node contains the name of the program and its code block. This is the declaration of the program name at the
@@ -30,26 +32,26 @@ public class ProgramNode implements IAstNode {
     /**
      * Analyzes the program node by analyzing its code block.
      *
-     * @param scope the current scope for analysis
+     * @param tableOfCurrentScope the current scope for analysis
      * @throws Exception if an error occurs during analysis
      **/
     @Override
-    public void analyze(Object scope) throws Exception {
+    public void analyze(SymbolTable.Scope tableOfCurrentScope) throws Exception {
         if (codeBlock != null) {
-            codeBlock.analyze(scope);
+            codeBlock.analyze(tableOfCurrentScope);
         }
     }
 
     /**
      * Generates code for the program node by generating code for its code block.
      *
-     * @param scope the current scope for code generation
+     * @param tableOfCurrentScope the current scope for code generation
      * @param generator the code generator to use
      **/
     @Override
-    public void generate(Object scope, Object generator) {
+    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
         if (codeBlock != null) {
-            codeBlock.generate(scope, generator);
+            codeBlock.generate(tableOfCurrentScope, generator);
         }
     }
 }

@@ -1,5 +1,7 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.symboltable.SymbolTable;
+
 import java.util.List;
 
 /********************************************
@@ -31,27 +33,27 @@ public class CallNode implements IAstNode {
     /**
      * Analyzes the call node by analyzing its arguments.
      *
-     * @param scope the current scope for analysis
+     * @param tableOfCurrentScope the current scope for analysis
      * @throws Exception if an error occurs during analysis
      **/
     @Override
-    public void analyze(Object scope) throws Exception {
+    public void analyze(SymbolTable.Scope tableOfCurrentScope) throws Exception {
         // check arguments from left to right
         for (IAstNode arg : arguments) {
-            arg.analyze(scope);
+            arg.analyze(tableOfCurrentScope);
         }
     }
 
     /**
      * Generates code for the call node by generating code for its arguments.
      *
-     * @param scope the current scope for code generation
+     * @param tableOfCurrentScope the current scope for code generation
      * @param generator the code generator to use
      **/
     @Override
-    public void generate(Object scope, Object generator) {
+    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
         for (IAstNode arg : arguments) {
-            arg.generate(scope, generator);
+            arg.generate(tableOfCurrentScope, generator);
         }
     }
 }

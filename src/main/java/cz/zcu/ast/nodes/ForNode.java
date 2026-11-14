@@ -1,5 +1,7 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.symboltable.SymbolTable;
+
 /********************************************
  * Represents a for loop in the abstract syntax tree (AST).
  * This node contains the iterator variable name, initial expression, end expression, and the body of the loop.
@@ -39,23 +41,23 @@ public class ForNode implements IAstNode {
     /**
      * Analyzes the for node by analyzing its initial expression, to expression, and body.
      *
-     * @param scope the current scope for analysis
+     * @param tableOfCurrentScope the current scope for analysis
      * @throws Exception if an error occurs during analysis
      **/
     @Override
-    public void analyze(Object scope) throws Exception {
-        initExpression.analyze(scope);
-        toExpression.analyze(scope);
-        body.analyze(scope);
+    public void analyze(SymbolTable.Scope tableOfCurrentScope) throws Exception {
+        initExpression.analyze(tableOfCurrentScope);
+        toExpression.analyze(tableOfCurrentScope);
+        body.analyze(tableOfCurrentScope);
     }
 
     /**
      * Generates code for the for node by generating code for its initial expression, to expression, and body.
      *
-     * @param scope the current scope for code generation
+     * @param tableOfCurrentScope the current scope for code generation
      * @param generator the code generator to use
      **/
     @Override
-    public void generate(Object scope, Object generator) {
+    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
     }
 }

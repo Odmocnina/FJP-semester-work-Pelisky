@@ -1,5 +1,7 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.symboltable.SymbolTable;
+
 /********************************************
  * Represents an if-else statement in the abstract syntax tree (AST).
  * This node contains the condition, the block of commands to execute if the condition is true,
@@ -35,26 +37,26 @@ public class IfElseNode implements IAstNode {
     /**
      * Analyzes the if-else node by analyzing its condition, then block, and optional else block.
      *
-     * @param scope the current scope for analysis
+     * @param tableOfCurrentScope the current scope for analysis
      * @throws Exception if an error occurs during analysis
      **/
     @Override
-    public void analyze(Object scope) throws Exception {
-        condition.analyze(scope);
-        thenBlock.analyze(scope);
+    public void analyze(SymbolTable.Scope tableOfCurrentScope) throws Exception {
+        condition.analyze(tableOfCurrentScope);
+        thenBlock.analyze(tableOfCurrentScope);
         if (elseBlock != null) {
-            elseBlock.analyze(scope);
+            elseBlock.analyze(tableOfCurrentScope);
         }
     }
 
     /**
      * Generates code for the if-else node by generating code for its condition, then block, and optional else block.
      *
-     * @param scope the current scope for code generation
+     * @param tableOfCurrentScope the current scope for code generation
      * @param generator the code generator to use
      **/
     @Override
-    public void generate(Object scope, Object generator) {
+    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
 
     }
 }

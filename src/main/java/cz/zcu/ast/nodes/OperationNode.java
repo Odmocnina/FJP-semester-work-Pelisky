@@ -1,5 +1,7 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.symboltable.SymbolTable;
+
 import java.util.List;
 
 /********************************************
@@ -31,26 +33,26 @@ public class OperationNode implements IAstNode {
     /**
      * Analyzes the operation node by analyzing its operands.
      *
-     * @param scope the current scope for analysis
+     * @param tableOfCurrentScope the current scope for analysis
      * @throws Exception if an error occurs during analysis
      **/
     @Override
-    public void analyze(Object scope) throws Exception {
+    public void analyze(SymbolTable.Scope tableOfCurrentScope) throws Exception {
         for (IAstNode operand : operands) {
-            operand.analyze(scope);
+            operand.analyze(tableOfCurrentScope);
         }
     }
 
     /**
      * Generates code for the operation node by generating code for its operands.
      *
-     * @param scope the current scope for code generation
+     * @param tableOfCurrentScope the current scope for code generation
      * @param generator the code generator to use
      **/
     @Override
-    public void generate(Object scope, Object generator) {
+    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
         for (IAstNode operand : operands) {
-            operand.generate(scope, generator);
+            operand.generate(tableOfCurrentScope, generator);
         }
     }
 }

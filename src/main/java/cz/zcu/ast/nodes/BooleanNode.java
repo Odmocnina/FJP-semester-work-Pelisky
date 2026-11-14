@@ -1,5 +1,7 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.symboltable.SymbolTable;
+
 /********************************************
  * Represents a boolean node in the abstract syntax tree (AST).
  * This node contains a boolean value.
@@ -24,20 +26,20 @@ public class BooleanNode implements IAstNode {
     /**
      * Analyzes the boolean node.
      *
-     * @param scope the current scope for analysis
+     * @param tableOfCurrentScope the current scope for analysis
      * @throws Exception if an error occurs during analysis
      **/
-    public void analyze(Object scope) throws Exception {
+    public void analyze(SymbolTable.Scope tableOfCurrentScope) throws Exception {
 
     }
 
     /**
      * Generates code for the boolean node.
      *
-     * @param scope the current scope for code generation
+     * @param tableOfCurrentScope the current scope for code generation
      * @param generator the code generator to use
      **/
-    public void generate(Object scope, Object generator) {
+    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
 
     }
 }

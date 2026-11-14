@@ -1,5 +1,7 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.symboltable.SymbolTable;
+
 /**************************************************
  * Class representing an assignment node in the abstract syntax tree (AST).
  *
@@ -28,24 +30,24 @@ public class AssignNode implements IAstNode {
     /**
      * Analyzes the assignment node by analyzing the expression on the right side of the assignment.
      *
-     * @param scope the current scope for analysis
+     * @param tableOfCurrentScope the current scope for analysis
      * @throws Exception if an error occurs during analysis
      **/
     @Override
-    public void analyze(Object scope) throws Exception {
+    public void analyze(SymbolTable.Scope tableOfCurrentScope) throws Exception {
         // check the validity of expression on the right side of the assignment
-        expression.analyze(scope);
+        expression.analyze(tableOfCurrentScope);
     }
 
     /**
      * Generates code for the assignment node by generating code for the expression on the right side of the assignment.
      *
-     * @param scope the current scope for code generation
+     * @param tableOfCurrentScope the current scope for code generation
      * @param generator the code generator to use
      **/
     @Override
-    public void generate(Object scope, Object generator) {
+    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
         // generate code for the expression on the right side of the assignment
-        expression.generate(scope, generator);
+        expression.generate(tableOfCurrentScope, generator);
     }
 }

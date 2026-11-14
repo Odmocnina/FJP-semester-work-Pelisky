@@ -1,5 +1,7 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.symboltable.SymbolTable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,28 +20,28 @@ public class BlockNode implements IAstNode {
     /**
      * Function for checking the semantic of the block of code, checks the semantic of all commands in it
      *
-     * @param scope the current scope for analysis
+     * @param tableOfCurrentScope the current scope for analysis
      * @throws Exception if an error occurs during analysis
      **/
     @Override
-    public void analyze(Object scope) throws Exception {
+    public void analyze(SymbolTable.Scope tableOfCurrentScope) throws Exception {
         // Block itself cannot be wrong that is chacked by the grammar, commands in it might be
         for (IAstNode statement : statements) {
-            statement.analyze(scope);
+            statement.analyze(tableOfCurrentScope);
         }
     }
 
     /**
      * Function for generation of the PL/0 assembler instructions
      *
-     * @param scope the current scope for code generation
+     * @param tableOfCurrentScope the current scope for code generation
      * @param generator the code generator to use
      **/
     @Override
-    public void generate(Object scope, Object generator) {
+    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
         // Block itself does nothing, commands in it may do something
         for (IAstNode statement : statements) {
-            statement.generate(scope, generator);
+            statement.generate(tableOfCurrentScope, generator);
         }
     }
 }
