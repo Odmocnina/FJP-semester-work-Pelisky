@@ -3,9 +3,6 @@ package cz.zcu.symboltable;
 import java.util.*;
 
 
-// TODO: Chceme povolit, aby se mohly jmenovat napr. promenne a funkce stejne? Tedy ze by mohla existovat funkce "hruska" a zaroven promenna s nazvem "hruska"?
-// ja jsem spis proti, akorat to vytvari nejasnosti - V
-
 /**
  * Tabulka symbolu. Udrzuje v sobe momentalni stav zanoreni pomoci podtridy {@link Scope}.
  */
@@ -22,10 +19,23 @@ public class SymbolTable {
 		this.symbolTable.put(GLOBAL_SCOPE, new HashMap<>());
 	}
 
+
+	/**
+	 * Globalni scope, sem jdou veskere constany, funkce, procedury, atd.
+	 */
+	public static final Scope GLOBAL_SCOPE = new Scope(null, "Global");
+
 	/**
 	 * Verejna instance jedinacka
 	 */
 	public static final SymbolTable SYMBOL_TABLE = new SymbolTable();
+
+	@Override
+	public String toString() {
+		return "SymbolTable{" +
+				"symbolTable=" + symbolTable +
+				'}';
+	}
 
 	/**
 	 * Zanoreni do vnitrniho scope/bloku. Tohle je verze pro pojmenovane scope, tzn. funkce a procedury.
@@ -51,6 +61,7 @@ public class SymbolTable {
 	public Scope pushScope(Scope scope, String ID) {
 		var newscope = new Scope(scope, ID);
 		scope.children.add(newscope);
+		this.symbolTable.put(newscope, new HashMap<>());
 		return newscope;
 	}
 
@@ -167,10 +178,6 @@ public class SymbolTable {
 		this.putSymbol(this.currentScope, symbol);
 	}
 
-	/**
-	 * Globalni scope, sem jdou veskere constany, funkce, procedury, atd.
-	 */
-	public static final Scope GLOBAL_SCOPE = new Scope(null, "Global");
 
 	/**
 	 * Jednoducha trida pro vymezeni nejakeho scope. Slouzi jako prvni klic pro tabulku symbolu {@link SymbolTable}.
@@ -194,5 +201,15 @@ public class SymbolTable {
 		public Scope getParent() {
 			return parent;
 		}
+
+		@Override
+		public String toString() {
+			return "Scope{" +
+					"funcname='" + funcname + '\'' +
+					", parent=" + ((parent == null) ? GLOBAL_SCOPE.funcname : parent.funcname) +
+					", children=" + children +
+					'}';
+		}
 	}
+
 }
