@@ -1,9 +1,11 @@
 package cz.zcu.ast.nodes;
 
 import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.codegen.instructions.WriteInstruction;
 import cz.zcu.exceptions.NotImplemented;
 import cz.zcu.symboltable.SymbolTable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /********************************************
@@ -54,9 +56,16 @@ public class CallNode implements IAstNode {
      */
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
+        var instr = new ArrayList<Instruction>();
         for (IAstNode arg : arguments) {
-            arg.generate(tableOfCurrentScope);
+            instr.addAll(arg.generate(tableOfCurrentScope));
         }
-        throw new NotImplemented(this.getClass().getCanonicalName());
+        if (identifierName.equals("WriteLn")) {
+            // TODO: better handling
+            instr.add(new WriteInstruction());
+            return instr;
+        } else {
+            throw new NotImplemented(this.getClass().getCanonicalName());
+        }
     }
 }

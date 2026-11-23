@@ -1,13 +1,14 @@
 package cz.zcu.codegen;
 
-import cz.zcu.CustomLangParser;
 import cz.zcu.ast.nodes.BlockNode;
 import cz.zcu.ast.nodes.IAstNode;
 import cz.zcu.ast.nodes.ProgramNode;
-import cz.zcu.symboltable.Symbol;
+import cz.zcu.codegen.instructions.Instruction;
 import cz.zcu.symboltable.SymbolTable;
-import org.antlr.v4.codegen.model.decl.CodeBlock;
 
+/**
+ * Creates code from a given AST tree, so far only string output
+ */
 public class CodeGenerator {
 	public String compile(IAstNode root) {
 		System.out.println("Starting analysis");
@@ -29,11 +30,22 @@ public class CodeGenerator {
 		if (mainCode.statements.isEmpty()) {
 			System.out.println("Block Main je prazdny");
 			return "";
-		}
+		} else {
+			for (var statement : mainCode.statements) {
+				System.out.println("Statement: " + statement.getClass().getCanonicalName());
+			}
 
-		for (var statement : mainCode.statements) {
-			System.out.println("Statement: " + statement.getClass().getCanonicalName());
+			var allinst = mainCode.generate(SymbolTable.GLOBAL_SCOPE);
+			var result = new StringBuilder();
+			for (var instr: allinst) {
+				result.append(emitInstruction(instr));
+			}
+			return result.toString();
 		}
-		return "";
+	}
+
+
+	public String emitInstruction(Instruction ins) {
+		return String.format("%s %d %s\n", ins.getOpcode(), ins.getLevel(), ins.getPar().getString());
 	}
 }

@@ -59,12 +59,16 @@ public class Main {
             // any visitor can be attached like so
             var visitor = new ASTBuilder();
             IAstNode mytree = visitor.visit(tree);
-            CodeGenerator codegen = new CodeGenerator();
-            codegen.compile(mytree);
 
             // print the tree
             System.out.println("Parsing finised!");
             System.out.println(tree.toStringTree());
+
+            
+            CodeGenerator codegen = new CodeGenerator();
+            var code = codegen.compile(mytree);
+            System.out.println(code);
+
 
             // === grafic showing of the tree ===
             JFrame frame = new JFrame("Syntaktický strom - CustomLang");

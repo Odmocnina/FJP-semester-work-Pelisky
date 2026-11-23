@@ -1,6 +1,6 @@
 package cz.zcu.codegen.instructions;
 
-public abstract sealed class Instruction permits LitInstruction {
+public abstract sealed class Instruction permits LitInstruction, WriteInstruction {
 	private final String opcode;
 	private final int level;
 	private final Par par;
@@ -25,7 +25,12 @@ public abstract sealed class Instruction permits LitInstruction {
 
 	// Parameters can be: literal value, an enum op ops, an address (label) or zero
 	public sealed interface Par permits NumeralPar, OperationPar, AddressPar {
-
+		/**
+		 * Return the parameter's value as a String.
+		 * Not an equivalent of "toString", which is for debug printing!
+		 * @return Value of the parameter as {@link String}
+		 */
+		String getString();
 	}
 
 }

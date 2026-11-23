@@ -44,9 +44,10 @@ public class BlockNode implements IAstNode {
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
         // Block itself does nothing, commands in it may do something
+        var instr = new ArrayList<Instruction>();
         for (IAstNode statement : statements) {
-            statement.generate(tableOfCurrentScope);
+            instr.addAll(statement.generate(tableOfCurrentScope));
         }
-        throw new NotImplemented(this.getClass().getCanonicalName());
+        return instr;
     }
 }
