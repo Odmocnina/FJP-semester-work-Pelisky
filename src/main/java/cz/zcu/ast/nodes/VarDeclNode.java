@@ -1,6 +1,7 @@
 package cz.zcu.ast.nodes;
 
 import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.codegen.instructions.StoreInstruction;
 import cz.zcu.exceptions.NotImplemented;
 import cz.zcu.symboltable.Symbol;
 import cz.zcu.symboltable.SymbolTable;
@@ -24,6 +25,9 @@ public class VarDeclNode implements IAstNode {
 
     /** assigment of the variable, can be null **/
     public IAstNode expression;
+
+    /** address within the local block */
+    public Integer address = null;
 
     /**
      * Create new node for declaration of new variable
@@ -61,7 +65,9 @@ public class VarDeclNode implements IAstNode {
      */
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
-
-        throw new NotImplemented(this.getClass().getCanonicalName());
+        var instructs = this.expression.generate(tableOfCurrentScope);
+        // variables are always local
+        instructs.add(new StoreInstruction(0, this.address));
+        return instructs;
     }
 }

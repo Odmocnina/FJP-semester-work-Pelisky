@@ -41,7 +41,7 @@ public class CodeGenerator {
 			}
 
 			var allinst = new ArrayList<Instruction>();
-			// preamble
+			// preamble, TODO: can be merged with existing
 			allinst.add(new IntInstruction(3));
 			allinst.addAll(mainCode.generate(SymbolTable.GLOBAL_SCOPE));
 			// main return

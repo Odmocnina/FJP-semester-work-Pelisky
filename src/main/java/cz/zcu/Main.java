@@ -33,12 +33,12 @@ public class Main {
 				Code {
 				    //WriteLn("Hello World!");
 				    //ReadLn();
-				    //var int a := +(1, 2);
 				    //WriteLn(+(1, 2));
 				    //WriteLn(/(4, 2));
 				    //WriteLn(*(6, 7));
 				    if (=(1,2)) then { WriteLn(48); } else { WriteLn(49); }
 				    if (!=(1,2)) then { WriteLn(48); }
+				    var int a := +(1, 2);
 				    // minus is not implemented
 				}""");
 
