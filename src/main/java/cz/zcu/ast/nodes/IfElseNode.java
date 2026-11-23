@@ -78,7 +78,7 @@ public class IfElseNode implements IAstNode {
             trueblock.add(new JumpInstruction(falselab.getPar()));
             var truelab = new LabelInstruction("true");
             trueblock.add(truelab);
-            
+
             cond.add(new CondJumpInstruction(truelab.getPar()));
 
             cond.addAll(trueblock);
