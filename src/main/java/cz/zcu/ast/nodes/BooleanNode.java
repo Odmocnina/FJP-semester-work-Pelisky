@@ -1,6 +1,10 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.exceptions.NotImplemented;
 import cz.zcu.symboltable.SymbolTable;
+
+import java.util.List;
 
 /********************************************
  * Represents a boolean node in the abstract syntax tree (AST).
@@ -34,12 +38,13 @@ public class BooleanNode implements IAstNode {
     }
 
     /**
-     * Generates code for the boolean node.
-     *
-     * @param tableOfCurrentScope the current scope for code generation
-     * @param generator the code generator to use
-     **/
-    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
+	 * Generates code for the boolean node.
+	 *
+	 * @param tableOfCurrentScope the current scope for code generation
+	 * @return
+	 */
+    public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
 
+		throw new NotImplemented(this.getClass().getCanonicalName());
     }
 }

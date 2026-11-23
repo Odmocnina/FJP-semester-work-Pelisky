@@ -1,6 +1,10 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.codegen.instructions.LitInstruction;
 import cz.zcu.symboltable.SymbolTable;
+
+import java.util.List;
 
 /********************************************
  * Represents an integer node in the abstract syntax tree (AST).
@@ -35,13 +39,13 @@ public class IntegerNode implements IAstNode {
     }
 
     /**
-     * Generates code for the integer node.
-     *
-     * @param tableOfCurrentScope the current scope for code generation
-     * @param generator the code generator to use
-     **/
+	 * Generates code for the integer node.
+	 *
+	 * @param tableOfCurrentScope the current scope for code generation
+	 * @return The literal value
+	 */
     @Override
-    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
-
+    public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
+		return List.of(new LitInstruction(this.value));
     }
 }

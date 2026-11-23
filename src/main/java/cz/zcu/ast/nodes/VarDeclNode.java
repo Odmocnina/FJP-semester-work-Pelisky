@@ -1,6 +1,11 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.exceptions.NotImplemented;
+import cz.zcu.symboltable.Symbol;
 import cz.zcu.symboltable.SymbolTable;
+
+import java.util.List;
 
 /********************************************
  * Represents a variable declaration node in the abstract syntax tree (AST).
@@ -44,17 +49,19 @@ public class VarDeclNode implements IAstNode {
         if (this.name == null) {
             throw new Exception("Variable name is null");
         }
+        SymbolTable.SYMBOL_TABLE.putSymbol(tableOfCurrentScope, new Symbol(0, this.name, Symbol.SymbolType.VARIABLE));
     }
 
     /**
      * Function for generation of the PL/0 assembler instructions
      *
      * @param tableOfCurrentScope the current scope for code generation
-     * @param generator the code generator to use
+     * @return
      * @throws Exception if an error occurs during code generation
-     **/
+     */
     @Override
-    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
+    public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
 
+        throw new NotImplemented(this.getClass().getCanonicalName());
     }
 }

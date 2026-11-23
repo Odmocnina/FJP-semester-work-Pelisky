@@ -1,5 +1,7 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.exceptions.NotImplemented;
 import cz.zcu.symboltable.SymbolTable;
 
 import java.util.List;
@@ -47,12 +49,13 @@ public class OperationNode implements IAstNode {
      * Generates code for the operation node by generating code for its operands.
      *
      * @param tableOfCurrentScope the current scope for code generation
-     * @param generator the code generator to use
-     **/
+     * @return
+     */
     @Override
-    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
+    public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
         for (IAstNode operand : operands) {
-            operand.generate(tableOfCurrentScope, generator);
+            operand.generate(tableOfCurrentScope);
         }
+        throw new NotImplemented(this.getClass().getCanonicalName());
     }
 }

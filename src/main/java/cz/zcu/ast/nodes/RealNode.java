@@ -1,6 +1,10 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.exceptions.NotImplemented;
 import cz.zcu.symboltable.SymbolTable;
+
+import java.util.List;
 
 public class RealNode implements IAstNode {
 
@@ -27,12 +31,13 @@ public class RealNode implements IAstNode {
     }
 
     /**
-     * Generates code for the real node.
-     *
-     * @param tableOfCurrentScope the current scope for code generation
-     * @param generator the code generator to use
-     **/
+	 * Generates code for the real node.
+	 *
+	 * @param tableOfCurrentScope the current scope for code generation
+	 * @return
+	 */
     @Override
-    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
+    public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
+		throw new NotImplemented(this.getClass().getCanonicalName());
     }
 }

@@ -1,6 +1,10 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.exceptions.NotImplemented;
 import cz.zcu.symboltable.SymbolTable;
+
+import java.util.List;
 
 /**************************************************
  * Class representing an assignment node in the abstract syntax tree (AST).
@@ -43,11 +47,12 @@ public class AssignNode implements IAstNode {
      * Generates code for the assignment node by generating code for the expression on the right side of the assignment.
      *
      * @param tableOfCurrentScope the current scope for code generation
-     * @param generator the code generator to use
-     **/
+     * @return
+     */
     @Override
-    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
+    public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
         // generate code for the expression on the right side of the assignment
-        expression.generate(tableOfCurrentScope, generator);
+        expression.generate(tableOfCurrentScope);
+        throw new NotImplemented(this.getClass().getCanonicalName());
     }
 }

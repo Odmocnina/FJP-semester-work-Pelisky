@@ -1,8 +1,8 @@
 package cz.zcu;
 
-import cz.zcu.CustomLangParser;
-import cz.zcu.CustomLangLexer;
-import cz.zcu.visitor.PeliskyDummyVisitor;
+import cz.zcu.ast.ASTBuilder;
+import cz.zcu.ast.nodes.IAstNode;
+import cz.zcu.codegen.CodeGenerator;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.*;
@@ -31,9 +31,10 @@ public class Main {
 				Program HelloWorld;
 				
 				Code {
-				    WriteLn("Hello World!");
-				    ReadLn();
-				    var int a := +(1, 2);
+				    //WriteLn("Hello World!");
+				    //ReadLn();
+				    //var int a := +(1, 2);
+				    WriteLn(10);
 				}""");
 
         // make a tokes from our input code
@@ -56,8 +57,10 @@ public class Main {
             ParseTree tree = parser.program();
 
             // any visitor can be attached like so
-            PeliskyDummyVisitor visitor = new PeliskyDummyVisitor();
-            visitor.visit(tree);
+            var visitor = new ASTBuilder();
+            IAstNode mytree = visitor.visit(tree);
+            CodeGenerator codegen = new CodeGenerator();
+            codegen.compile(mytree);
 
             // print the tree
             System.out.println("Parsing finised!");

@@ -1,5 +1,7 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.exceptions.NotImplemented;
 import cz.zcu.symboltable.SymbolTable;
 
 import java.util.List;
@@ -48,12 +50,13 @@ public class CallNode implements IAstNode {
      * Generates code for the call node by generating code for its arguments.
      *
      * @param tableOfCurrentScope the current scope for code generation
-     * @param generator the code generator to use
-     **/
+     * @return
+     */
     @Override
-    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
+    public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
         for (IAstNode arg : arguments) {
-            arg.generate(tableOfCurrentScope, generator);
+            arg.generate(tableOfCurrentScope);
         }
+        throw new NotImplemented(this.getClass().getCanonicalName());
     }
 }

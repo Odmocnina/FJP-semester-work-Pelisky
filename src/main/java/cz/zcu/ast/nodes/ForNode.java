@@ -1,6 +1,10 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.exceptions.NotImplemented;
 import cz.zcu.symboltable.SymbolTable;
+
+import java.util.List;
 
 /********************************************
  * Represents a for loop in the abstract syntax tree (AST).
@@ -55,9 +59,10 @@ public class ForNode implements IAstNode {
      * Generates code for the for node by generating code for its initial expression, to expression, and body.
      *
      * @param tableOfCurrentScope the current scope for code generation
-     * @param generator the code generator to use
-     **/
+     * @return
+     */
     @Override
-    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
+    public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
+        throw new NotImplemented(this.getClass().getCanonicalName());
     }
 }

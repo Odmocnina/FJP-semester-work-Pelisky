@@ -1,6 +1,9 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.codegen.instructions.Instruction;
 import cz.zcu.symboltable.SymbolTable;
+
+import java.util.List;
 
 /*********************************************
  * Interface representing a node in the abstract syntax tree (AST). Every node in the AST should implement this
@@ -23,8 +26,8 @@ public interface IAstNode {
      * Generates code for the AST node within the given scope using the provided code generator.
      *
      * @param tableOfCurrentScope the current scope for code generation
-     * @param generator the code generator to use
-     **/
-    void generate(SymbolTable.Scope tableOfCurrentScope, Object generator);
+     * @return List of {@link Instruction}s that represent the Node
+     */
+    List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope);
 
 }

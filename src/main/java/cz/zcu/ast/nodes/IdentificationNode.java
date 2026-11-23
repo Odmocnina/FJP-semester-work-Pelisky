@@ -1,6 +1,10 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.exceptions.NotImplemented;
 import cz.zcu.symboltable.SymbolTable;
+
+import java.util.List;
 
 /********************************************
  * Represents an identification node in the abstract syntax tree (AST).
@@ -36,14 +40,15 @@ public class IdentificationNode implements IAstNode {
     }
 
     /**
-     * Generates code for the identification node. Since an identification node does not have any specific code
-     * generation requirements, this method is empty.
-     *
-     * @param tableOfCurrentScope the current scope for code generation
-     * @param generator the code generator to use
-     **/
+	 * Generates code for the identification node. Since an identification node does not have any specific code
+	 * generation requirements, this method is empty.
+	 *
+	 * @param tableOfCurrentScope the current scope for code generation
+	 * @return
+	 */
     @Override
-    public void generate(SymbolTable.Scope tableOfCurrentScope, Object generator) {
+    public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
+		throw new NotImplemented(this.getClass().getCanonicalName());
     }
 
 }
