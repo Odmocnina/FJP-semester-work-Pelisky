@@ -4,6 +4,7 @@ import cz.zcu.ast.nodes.BlockNode;
 import cz.zcu.ast.nodes.IAstNode;
 import cz.zcu.ast.nodes.ProgramNode;
 import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.codegen.instructions.LabelInstruction;
 import cz.zcu.symboltable.SymbolTable;
 
 /**
@@ -46,6 +47,9 @@ public class CodeGenerator {
 
 
 	public String emitInstruction(Instruction ins) {
-		return String.format("%s %d %s\n", ins.getOpcode(), ins.getLevel(), ins.getPar().getString());
+		return switch (ins) {
+			case LabelInstruction l -> String.format("%s\n", l.getPar().getString());
+			default -> String.format("%s %d %s\n", ins.getOpcode(), ins.getLevel(), ins.getPar().getString());
+		};
 	}
 }

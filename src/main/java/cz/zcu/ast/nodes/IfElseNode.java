@@ -1,9 +1,14 @@
 package cz.zcu.ast.nodes;
 
+import cz.zcu.codegen.instructions.CondJumpInstruction;
 import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.codegen.instructions.JumpInstruction;
+import cz.zcu.codegen.instructions.LabelInstruction;
 import cz.zcu.exceptions.NotImplemented;
 import cz.zcu.symboltable.SymbolTable;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /********************************************
@@ -61,7 +66,29 @@ public class IfElseNode implements IAstNode {
      */
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
-        throw new NotImplemented(this.getClass().getCanonicalName());
+        // names of labels here end blocks, the meanings are therefore flipped (false is jumped to when cond is true)
+		var cond = new ArrayList<>(condition.generate(tableOfCurrentScope));
+        var trueblock = new ArrayList<>(thenBlock.generate(tableOfCurrentScope));
 
+        if (elseBlock != null) {
+            var falseblock = new ArrayList<>(elseBlock.generate(tableOfCurrentScope));
+            var falselab = new LabelInstruction("false");
+            falseblock.add(falselab);
+
+            trueblock.add(new JumpInstruction(falselab.getPar()));
+            var truelab = new LabelInstruction("true");
+            trueblock.add(truelab);
+            
+            cond.add(new CondJumpInstruction(truelab.getPar()));
+
+            cond.addAll(trueblock);
+            cond.addAll(falseblock);
+        } else {
+            var truelab = new LabelInstruction("true");
+            trueblock.add(truelab);
+            cond.add(new CondJumpInstruction(truelab.getPar()));
+            cond.addAll(trueblock);
+        }
+        return cond;
     }
 }

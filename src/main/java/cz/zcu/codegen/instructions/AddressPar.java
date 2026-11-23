@@ -5,6 +5,6 @@ import cz.zcu.exceptions.NotImplemented;
 public record AddressPar(Label label) implements Instruction.Par {
 	@Override
 	public String getString() {
-		throw new NotImplemented("Adress Parameter");
+		return String.format("@%s", label.getName());
 	}
 }
