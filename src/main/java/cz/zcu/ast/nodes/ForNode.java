@@ -15,9 +15,6 @@ import java.util.List;
  ********************************************/
 public class ForNode implements IAstNode {
 
-    /** name of the variable **/
-    public String iteratorName;
-
     /** start value **/
     public IAstNode initExpression;
 
@@ -28,15 +25,13 @@ public class ForNode implements IAstNode {
     public IAstNode body;
 
     /**
-     * Creates a new for node with the given iterator name, initial expression, to expression, and body.
+     * Creates a new for node with the given initial expression, to expression, and body.
      *
-     * @param iteratorName the name of the iterator variable
-     * @param initExpression the initial value expression for the iterator
-     * @param toExpression the end value expression for the iterator
+     * @param initExpression the initial value expression for the loop
+     * @param toExpression the end value expression for the loop
      * @param body the commands to execute within the for loop
      **/
-    public ForNode(String iteratorName, IAstNode initExpression, IAstNode toExpression, IAstNode body) {
-        this.iteratorName = iteratorName;
+    public ForNode(IAstNode initExpression, IAstNode toExpression, IAstNode body) {
         this.initExpression = initExpression;
         this.toExpression = toExpression;
         this.body = body;
@@ -59,8 +54,8 @@ public class ForNode implements IAstNode {
      * Generates code for the for node by generating code for its initial expression, to expression, and body.
      *
      * @param tableOfCurrentScope the current scope for code generation
-     * @return
-     */
+     * @return list of PL/0 instructions
+     **/
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
         throw new NotImplemented(this.getClass().getCanonicalName());

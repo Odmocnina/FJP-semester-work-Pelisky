@@ -6,6 +6,7 @@ import cz.zcu.exceptions.NotImplemented;
 import cz.zcu.symboltable.Symbol;
 import cz.zcu.symboltable.SymbolTable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /********************************************
@@ -53,6 +54,11 @@ public class VarDeclNode implements IAstNode {
         if (this.name == null) {
             throw new Exception("Variable name is null");
         }
+        // check if the expression is correct
+        if (this.expression != null) {
+            this.expression.analyze(tableOfCurrentScope);
+        }
+
         SymbolTable.SYMBOL_TABLE.putSymbol(tableOfCurrentScope, new Symbol(0, this.name, Symbol.SymbolType.VARIABLE));
     }
 
@@ -65,7 +71,11 @@ public class VarDeclNode implements IAstNode {
      */
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
-        var instructs = this.expression.generate(tableOfCurrentScope);
+        if (this.expression == null) {
+            return List.of();
+        }
+        // this is for situation when the node being assigned returns unchangeable list
+        var instructs = new ArrayList<>(this.expression.generate(tableOfCurrentScope));
         // variables are always local
         instructs.add(new StoreInstruction(0, this.address));
         return instructs;

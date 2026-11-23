@@ -1,6 +1,7 @@
 package cz.zcu.ast.nodes;
 
 import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.codegen.instructions.LitInstruction;
 import cz.zcu.exceptions.NotImplemented;
 import cz.zcu.symboltable.SymbolTable;
 
@@ -42,9 +43,9 @@ public class BooleanNode implements IAstNode {
 	 *
 	 * @param tableOfCurrentScope the current scope for code generation
 	 * @return
-	 */
+	 **/
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
-
-		throw new NotImplemented(this.getClass().getCanonicalName());
+        // insert to the stack depending on if the boolean value is 0 or 1
+        return List.of(new LitInstruction(this.value ? 1 : 0));
     }
 }

@@ -25,20 +25,22 @@ public class Main {
         }
     }
 
-    static void main() throws Exception {
+    public static void main(String[] args) throws Exception {
         // create a stream of the code from our code file
         CharStream input = CharStreams.fromString("""
 				Program HelloWorld;
 				
 				Code {
 				    //WriteLn("Hello World!");
-				    //ReadLn();
-				    //WriteLn(+(1, 2));
-				    //WriteLn(/(4, 2));
-				    //WriteLn(*(6, 7));
+				   // ReadLn();
+				   // WriteLn(+(1, 2));
+				   // WriteLn(/(4, 2));
+				  //  WriteLn(*(6, 7));
 				    if (=(1,2)) then { WriteLn(48); } else { WriteLn(49); }
 				    if (!=(1,2)) then { WriteLn(48); }
-				    var int a := +(1, 2);
+				    //var int a := +(1, 2);
+				    //var int minusNumber1 := -5;
+				   // var int minusNumber2 := -6;
 				    // minus is not implemented
 				}""");
 

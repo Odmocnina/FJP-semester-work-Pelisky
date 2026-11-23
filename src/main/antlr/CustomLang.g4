@@ -102,12 +102,8 @@ assignStat
 
 // cycles
 
-forInit
-    : ID (ASSIGN | EQUAL) expr
-    ;
-
 forStat
-    : FOR LPAREN forInit TO expr RPAREN DO block
+    : FOR LPAREN expr ARROW expr RPAREN DO block
     ;
 
 whileStat
@@ -145,7 +141,8 @@ expr
     : prefixOp LPAREN argList RPAREN            #prefixExpr			// Binary op +(2, 2) or <(a, b)
     | NEGATION LPAREN expr RPAREN				#negationExpr		// negation
     | ID ( LPAREN argList? RPAREN )?   			#callExpr			// call of function or a variable: myFunc(1, 2), its united so that it doesnt do collisions
-    | MINUS ( LPAREN expr COMMA expr RPAREN | expr )  #minusExpr	// minus: -5 or -+(2, 2)
+    | MINUS ( LPAREN expr COMMA expr RPAREN )  #minusExpr	// minus: -5 or -+(2, 2)
+    | MINUS expr                                #unaryMinusExpr
     | INT_LITERAL								#intLitExpr			// numbers, text, booleans
     | REAL_LITERAL								#realLitExpr
     | STRING_LITERAL 							#strLitExpr
@@ -180,6 +177,7 @@ UNTIL      : 'until' ;
 IF         : 'if' ;
 THEN       : 'then' ;
 ELSE       : 'else' ;
+ARROW      : '->' ;
 
 // Data types
 INT_TYPE   : 'int';

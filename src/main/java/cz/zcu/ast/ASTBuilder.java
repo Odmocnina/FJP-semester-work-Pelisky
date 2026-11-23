@@ -250,12 +250,11 @@ public class ASTBuilder extends CustomLangBaseVisitor<IAstNode> {
      **/
     @Override
     public IAstNode visitForStat(CustomLangParser.ForStatContext ctx) {
-        String iteratorName = ctx.forInit().ID().getText();
-        IAstNode initExpression = visit(ctx.forInit().expr());
-        IAstNode toExpression = visit(ctx.expr());
+        IAstNode initExpression = visit(ctx.expr(0));
+        IAstNode toExpression = visit(ctx.expr(1));
         IAstNode body = visit(ctx.block());
 
-        return new ForNode(iteratorName, initExpression, toExpression, body);
+        return new ForNode(initExpression, toExpression, body);
     }
 
     /**
@@ -305,6 +304,18 @@ public class ASTBuilder extends CustomLangBaseVisitor<IAstNode> {
         }
 
         return new OperationNode(operator, operands);
+    }
+
+    /**
+     * Visits the unary minus in the parse trie and creates the node for
+     *
+     * @param ctx the parse tree
+     * @return UnaryMinusNode that will be inserted into the AST
+     **/
+    @Override
+    public IAstNode visitUnaryMinusExpr(CustomLangParser.UnaryMinusExprContext ctx) {
+        IAstNode innerExpression = visit(ctx.expr());
+        return new UnaryMinusNode(innerExpression);
     }
 
 }
