@@ -34,7 +34,10 @@ public class Main {
 				    //WriteLn("Hello World!");
 				    //ReadLn();
 				    //var int a := +(1, 2);
-				    WriteLn(10);
+				    WriteLn(+(1, 2));
+				    WriteLn(/(4, 2));
+				    WriteLn(*(6, 7));
+				    // minus is not implemented
 				}""");
 
         // make a tokes from our input code
@@ -64,10 +67,6 @@ public class Main {
             System.out.println("Parsing finised!");
             System.out.println(tree.toStringTree());
 
-            
-            CodeGenerator codegen = new CodeGenerator();
-            var code = codegen.compile(mytree);
-            System.out.println(code);
 
 
             // === grafic showing of the tree ===
@@ -80,7 +79,13 @@ public class Main {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(800, 600);
             frame.setVisible(true);
-        } catch (ParseCancellationException e) {
+
+
+			CodeGenerator codegen = new CodeGenerator();
+			var code = codegen.compile(mytree);
+			System.out.println(code);
+
+		} catch (ParseCancellationException e) {
             System.out.println("Compilation failed: " + e.getMessage());
         }
     }

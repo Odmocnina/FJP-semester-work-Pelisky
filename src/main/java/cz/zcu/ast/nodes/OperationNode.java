@@ -1,9 +1,12 @@
 package cz.zcu.ast.nodes;
 
 import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.codegen.instructions.OperationInstruction;
+import cz.zcu.codegen.instructions.OperationPar;
 import cz.zcu.exceptions.NotImplemented;
 import cz.zcu.symboltable.SymbolTable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /********************************************
@@ -53,9 +56,15 @@ public class OperationNode implements IAstNode {
      */
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
+        var instructions = new ArrayList<Instruction>();
         for (IAstNode operand : operands) {
-            operand.generate(tableOfCurrentScope);
+            instructions.addAll(operand.generate(tableOfCurrentScope));
         }
-        throw new NotImplemented(this.getClass().getCanonicalName());
+        if (operands.size() == 1 && operator.equals("-")) {
+            instructions.add(new OperationInstruction(OperationPar.OPS.UMIN));
+        } else {
+        	instructions.add(new OperationInstruction(OperationPar.fromcharacter(operator)));
+        }
+        return instructions;
     }
 }
