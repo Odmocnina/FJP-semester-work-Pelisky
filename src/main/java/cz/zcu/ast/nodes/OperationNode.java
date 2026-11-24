@@ -53,7 +53,7 @@ public class OperationNode implements IAstNode {
      *
      * @param tableOfCurrentScope the current scope for code generation
      * @return
-     */
+     **/
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
         var instructions = new ArrayList<Instruction>();

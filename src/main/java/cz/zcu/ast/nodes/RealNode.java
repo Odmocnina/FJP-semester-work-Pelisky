@@ -8,6 +8,13 @@ import cz.zcu.utils.Constants;
 
 import java.util.List;
 
+/********************************************
+ * Represents a program node in the abstract syntax tree (AST).
+ * This node contains real value.
+ *
+ * @author Michael Hladky, Victor Verner
+ * @version 1.0
+ ********************************************/
 public class RealNode implements IAstNode {
 
     /** the number value of the Real number **/

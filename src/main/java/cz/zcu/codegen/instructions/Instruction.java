@@ -1,6 +1,6 @@
 package cz.zcu.codegen.instructions;
 
-public abstract sealed class Instruction permits CondJumpInstruction, IntInstruction, JumpInstruction, LabelInstruction, LitInstruction, OperationInstruction, RetInstruction, StoreInstruction, WriteInstruction {
+public abstract sealed class Instruction permits CondJumpInstruction, IntInstruction, JumpInstruction, LabelInstruction, LitInstruction, LodInstruction, OperationInstruction, RetInstruction, StoreInstruction, WriteInstruction {
 	private final String opcode;
 	private final int level;
 	private final Par par;

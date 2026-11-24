@@ -23,6 +23,7 @@ import java.util.ArrayList;
  **************************************************************/
 public class CodeGenerator {
 
+	/** logger used for logging **/
 	private static final Logger logger = LogManager.getLogger();
 
 	/**
@@ -75,7 +76,12 @@ public class CodeGenerator {
 		}
 	}
 
-
+	/**
+	 * Method for getting instruction in string from instance of Instruction
+	 *
+	 * @param ins instance of the instruction
+	 * @return instruction in string
+	 **/
 	public String emitInstruction(Instruction ins) {
 		return switch (ins) {
 			case LabelInstruction l -> String.format("%s\n", l.getPar().getString());

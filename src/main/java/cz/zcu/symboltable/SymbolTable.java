@@ -12,7 +12,7 @@ public class SymbolTable {
 	// TODO: mozna bychom se mohli vykaslat na tuhle toplevel mapu a rovnou presunout mapy dovnitr tridy Scope?
 	private final Map<Scope, Map<String, Symbol>> symbolTable = new HashMap<>();
 
-	// pocatecni scope je logicky globalni
+	/** beginning scope, its global **/
 	private Scope currentScope = GLOBAL_SCOPE;
 
 	private SymbolTable() {
@@ -20,14 +20,10 @@ public class SymbolTable {
 	}
 
 
-	/**
-	 * Globalni scope, sem jdou veskere constany, funkce, procedury, atd.
-	 */
+	/** Global scope, here goes all constants, function, procedures **/
 	public static final Scope GLOBAL_SCOPE = new Scope(null, "Global");
 
-	/**
-	 * Verejna instance jedinacka
-	 */
+	/** Public instance of the singleton, symbol table needs to be seen in whole project so it singleton **/
 	public static final SymbolTable SYMBOL_TABLE = new SymbolTable();
 
 	@Override
@@ -209,6 +205,28 @@ public class SymbolTable {
 					", parent=" + ((parent == null) ? GLOBAL_SCOPE.funcname : parent.funcname) +
 					", children=" + children +
 					'}';
+		}
+
+		/**
+		 * Gets the number of variables in current scope
+		 *
+		 * @return number of variables in current scope
+		 **/
+		public int getLocalVariableCount() {
+			int count = 0;
+			Scope current = this;
+			while (current != null && current != GLOBAL_SCOPE) {
+				var symbols = SYMBOL_TABLE.symbolTable.get(current);
+				if (symbols != null) {
+					for (Symbol s : symbols.values()) {
+						if (s.type() == Symbol.SymbolType.VARIABLE) {
+							count++;
+						}
+					}
+				}
+				current = current.getParent();
+			}
+			return count;
 		}
 	}
 

@@ -7,11 +7,17 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.gui.TreeViewer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.swing.*;
 import java.util.Arrays;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+
+    /** logger used for logging **/
+    private static final Logger logger = LogManager.getLogger();
 
     public static class ThrowingErrorListener extends BaseErrorListener {
         public static final ThrowingErrorListener INSTANCE = new ThrowingErrorListener();
@@ -40,7 +46,10 @@ public class Main {
 				   // if (!=(1,2)) then { WriteLn(48); }
 				    var real a := 1.1;
 				    var real b := -6.7;
-				    var real v := +(2.2, 1.9);
+				    
+				    for (1->5) do {
+				        var int v := +(1, 1);
+				    }
 				    // minus is not implemented
 				}""");
 
@@ -59,7 +68,7 @@ public class Main {
         parser.addErrorListener(ThrowingErrorListener.INSTANCE);
 
         try {
-            System.out.println("Starting to parse...");
+            logger.info("Starting to parse...");
             // create the tree from our code
             ParseTree tree = parser.program();
 
@@ -68,13 +77,11 @@ public class Main {
             IAstNode mytree = visitor.visit(tree);
 
             // print the tree
-            System.out.println("Parsing finised!");
-            System.out.println(tree.toStringTree());
-
-
+            logger.info("Parsing finished!");
+            logger.debug(tree.toStringTree());
 
             // === grafic showing of the tree ===
-            JFrame frame = new JFrame("Syntaktický strom - CustomLang");
+            JFrame frame = new JFrame("Syntactic tree - CustomLang");
             JPanel panel = new JPanel();
             TreeViewer viewer = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
             viewer.setScale(1.2);
@@ -89,8 +96,9 @@ public class Main {
 			var code = codegen.compile(mytree);
 			System.out.println(code);
 
+
 		} catch (ParseCancellationException e) {
-            System.out.println("Compilation failed: " + e.getMessage());
+            logger.error("Compilation failed: {}", e.getMessage());
         }
     }
 }
