@@ -8,6 +8,12 @@ import cz.zcu.symboltable.SymbolTable;
 import java.util.ArrayList;
 import java.util.List;
 
+/********************************************
+ * Represents a unary minus node in the abstract syntax tree (AST).
+ *
+ * @author Michael Hladky, Victor Verner
+ * @version 1.0
+ ********************************************/
 public class UnaryMinusNode implements IAstNode {
 
     /** The expression to be negated **/
