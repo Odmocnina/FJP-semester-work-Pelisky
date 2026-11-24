@@ -51,12 +51,12 @@ public class ProgramNode implements IAstNode {
      *
      * @param tableOfCurrentScope the current scope for code generation
      * @return
-     */
+     **/
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
         if (codeBlock != null) {
             codeBlock.generate(tableOfCurrentScope);
         }
-        throw new NotImplemented(this.getClass().getCanonicalName());
+        return List.of();
     }
 }

@@ -53,7 +53,7 @@ public class BlockNode implements IAstNode {
      *
      * @param tableOfCurrentScope the current scope for code generation
      * @return
-     */
+     **/
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
         // Block itself does nothing, commands in it may do something

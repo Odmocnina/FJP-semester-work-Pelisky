@@ -17,7 +17,7 @@ public class UnaryMinusNode implements IAstNode {
      * Creates a new UnaryMinusNode with the given expression.
      *
      * @param expression the inner expression node
-     */
+     **/
     public UnaryMinusNode(IAstNode expression) {
         this.expression = expression;
     }

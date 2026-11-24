@@ -27,7 +27,7 @@ public interface IAstNode {
      *
      * @param tableOfCurrentScope the current scope for code generation
      * @return List of {@link Instruction}s that represent the Node
-     */
+     **/
     List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope);
 
 }

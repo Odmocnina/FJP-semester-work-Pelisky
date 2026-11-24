@@ -116,15 +116,6 @@ public class ASTBuilder extends CustomLangBaseVisitor<IAstNode> {
             return new CallNode(identifierName, arguments);
         }
 
-//        // if followed by := or =, its assignment of variable
-//        if (ctx.assignTail() != null) {
-//
-//            IAstNode expression = visit(ctx.assignTail().expr());
-//
-//
-//            return new AssignNode(identifierName, expression);
-//        }
-
         return null;
     }
 

@@ -36,31 +36,31 @@ public class Main {
 				   // WriteLn(+(1, 2));
 				   // WriteLn(/(4, 2));
 				  //  WriteLn(*(6, 7));
-				    if (=(1,2)) then { WriteLn(48); } else { WriteLn(49); }
-				    if (!=(1,2)) then { WriteLn(48); }
-				    //var int a := +(1, 2);
-				    //var int minusNumber1 := -5;
-				   // var int minusNumber2 := -6;
+				   // if (=(1,2)) then { WriteLn(48); } else { WriteLn(49); }
+				   // if (!=(1,2)) then { WriteLn(48); }
+				    var real a := 1.1;
+				    var real b := -6.7;
+				    var real v := +(2.2, 1.9);
 				    // minus is not implemented
 				}""");
 
         // make a tokes from our input code
         CustomLangLexer lexer = new CustomLangLexer(input);
 
-        // remove error for our error handeling
+        // remove error for our error handling
         lexer.removeErrorListeners();
         lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
 
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         CustomLangParser parser = new CustomLangParser(tokens);
 
-        // remove error for our error handeling
+        // remove error for our error handling
         parser.removeErrorListeners();
         parser.addErrorListener(ThrowingErrorListener.INSTANCE);
 
         try {
             System.out.println("Starting to parse...");
-            // cretate the tree from our code
+            // create the tree from our code
             ParseTree tree = parser.program();
 
             // any visitor can be attached like so

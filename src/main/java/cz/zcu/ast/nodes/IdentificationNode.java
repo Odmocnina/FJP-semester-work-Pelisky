@@ -45,7 +45,7 @@ public class IdentificationNode implements IAstNode {
 	 *
 	 * @param tableOfCurrentScope the current scope for code generation
 	 * @return
-	 */
+	 **/
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
 		throw new NotImplemented(this.getClass().getCanonicalName());

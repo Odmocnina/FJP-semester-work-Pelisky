@@ -62,8 +62,8 @@ public class IfElseNode implements IAstNode {
      * Generates code for the if-else node by generating code for its condition, then block, and optional else block.
      *
      * @param tableOfCurrentScope the current scope for code generation
-     * @return
-     */
+     * @return list PL/0 instructions for representation if else
+     **/
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
         // names of labels here end blocks, the meanings are therefore flipped (false is jumped to when cond is true)

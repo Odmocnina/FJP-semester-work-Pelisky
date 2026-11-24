@@ -9,35 +9,55 @@ import cz.zcu.codegen.instructions.LabelInstruction;
 import cz.zcu.codegen.instructions.RetInstruction;
 import cz.zcu.symboltable.SymbolTable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 
-/**
- * Creates code from a given AST tree, so far only string output
- */
+/**************************************************************
+ * Class for representing the code generator that creates code from a given AST tree, by going over it, so far only
+ * string output
+ *
+ * @author Michael Hladky, Victor Verner
+ * @version 1.0
+ **************************************************************/
 public class CodeGenerator {
+
+	private static final Logger logger = LogManager.getLogger();
+
+	/**
+	 * Method that goes over the AST and generates PL/0 instructions form Pelisky language
+	 *
+	 * @param root root node of the AST
+	 * @return PL/0 instructions in string
+	 **/
 	public String compile(IAstNode root) {
-		System.out.println("Starting analysis");
+		logger.info("Starting semantic analysis");
+
+		// start and process of recursive decent when doing semantic analysis
 		try {
 			root.analyze(SymbolTable.GLOBAL_SCOPE);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		System.out.println("Analysis done");
 
-		System.out.printf("The top level element is: %s\n", root.getClass().getCanonicalName());
+		logger.info("Semantic analysis finished");
+
+		logger.debug("The top level element is: {}\n", root.getClass().getCanonicalName());
 		if (!(root instanceof ProgramNode)) {
-			System.out.println("Toplevel statement neni deklarace programu!");
+			logger.fatal("Top level statement is not declaration of program!");
 			return "ERROR";
 		}
-		System.out.println("The symbol table looks like this: " + SymbolTable.SYMBOL_TABLE);
+
+        logger.info("The symbol table looks like this: {}", SymbolTable.SYMBOL_TABLE);
 
 		BlockNode mainCode = (BlockNode) ((ProgramNode) root).codeBlock;
 		if (mainCode.statements.isEmpty()) {
-			System.out.println("Block Main je prazdny");
+			logger.warn("Main block is empty");
 			return "";
 		} else {
 			for (var statement : mainCode.statements) {
-				System.out.println("Statement: " + statement.getClass().getCanonicalName());
+                logger.debug("Statement: {}", statement.getClass().getCanonicalName());
 			}
 
 			var allinst = new ArrayList<Instruction>();

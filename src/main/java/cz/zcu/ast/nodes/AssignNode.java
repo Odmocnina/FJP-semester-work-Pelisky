@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Michael Hladky, Victor Verner
  * @version 1.0
- */
+ **************************************************/
 public class AssignNode implements IAstNode {
 
     /** The name of the variable being assigned to **/

@@ -68,7 +68,7 @@ public class VarDeclNode implements IAstNode {
      * @param tableOfCurrentScope the current scope for code generation
      * @return
      * @throws Exception if an error occurs during code generation
-     */
+     **/
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
         if (this.expression == null) {

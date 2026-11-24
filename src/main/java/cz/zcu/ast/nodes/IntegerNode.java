@@ -43,7 +43,7 @@ public class IntegerNode implements IAstNode {
 	 *
 	 * @param tableOfCurrentScope the current scope for code generation
 	 * @return The literal value
-	 */
+	 **/
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
 		return List.of(new LitInstruction(this.value));

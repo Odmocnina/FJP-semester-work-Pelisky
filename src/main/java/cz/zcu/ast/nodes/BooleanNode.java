@@ -23,7 +23,7 @@ public class BooleanNode implements IAstNode {
      * Creates a new BooleanNode with the given boolean value.
      *
      * @param value the boolean value for this node
-     */
+     **/
     public BooleanNode(boolean value) {
         this.value = value;
     }
