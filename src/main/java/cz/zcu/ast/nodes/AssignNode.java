@@ -1,9 +1,13 @@
 package cz.zcu.ast.nodes;
 
 import cz.zcu.codegen.instructions.Instruction;
+import cz.zcu.codegen.instructions.LodInstruction;
+import cz.zcu.codegen.instructions.StoreInstruction;
 import cz.zcu.exceptions.NotImplemented;
+import cz.zcu.exceptions.UnknownSymbol;
 import cz.zcu.symboltable.SymbolTable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**************************************************
@@ -41,6 +45,9 @@ public class AssignNode implements IAstNode {
     public void analyze(SymbolTable.Scope tableOfCurrentScope) throws Exception {
         // check the validity of expression on the right side of the assignment
         expression.analyze(tableOfCurrentScope);
+        if (SymbolTable.SYMBOL_TABLE.getSymbol(tableOfCurrentScope, this.identifierName) == null) {
+            throw new UnknownSymbol(this.identifierName);
+        }
     }
 
     /**
@@ -52,7 +59,8 @@ public class AssignNode implements IAstNode {
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
         // generate code for the expression on the right side of the assignment
-        expression.generate(tableOfCurrentScope);
-        throw new NotImplemented(this.getClass().getCanonicalName());
+		var instr = new ArrayList<>(expression.generate(tableOfCurrentScope));
+        instr.add(new StoreInstruction(0, SymbolTable.SYMBOL_TABLE.getSymbol(tableOfCurrentScope, this.identifierName).address()));
+        return instr;
     }
 }

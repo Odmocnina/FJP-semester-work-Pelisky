@@ -38,15 +38,11 @@ public class Main {
 				
 				Code {
 					var int a := 1;
+					a := 2;
 					// A -> Z+1
-				    for (x : 65 -> 91) do {
-				    	var int b := +(a,1);
-				    	WriteLn(x);
-				    	WriteLn(10);
-				    	WriteLn(+(a,x));
-				    	WriteLn(10);
-				    	WriteLn(+(x,b));
-				    	WriteLn(10);
+				    while (<(a, 10)) do {
+				    	a := +(a,1);
+				    	WriteLn(+(a, 65));
 				    }
 				}""");
 

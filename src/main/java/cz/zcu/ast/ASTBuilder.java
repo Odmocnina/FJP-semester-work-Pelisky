@@ -114,9 +114,9 @@ public class ASTBuilder extends CustomLangBaseVisitor<IAstNode> {
                 }
             }
             return new CallNode(identifierName, arguments);
+        } else {
+            return new AssignNode(identifierName, visit(ctx.assignTail().expr()));
         }
-
-        return null;
     }
 
     /**
