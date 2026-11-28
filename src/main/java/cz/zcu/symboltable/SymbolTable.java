@@ -12,7 +12,9 @@ public class SymbolTable {
 	// TODO: mozna bychom se mohli vykaslat na tuhle toplevel mapu a rovnou presunout mapy dovnitr tridy Scope?
 	private final Map<Scope, Map<String, Symbol>> symbolTable = new HashMap<>();
 
-	/** beginning scope, its global **/
+	/**
+	 * beginning scope, its global
+	 **/
 	private Scope currentScope = GLOBAL_SCOPE;
 
 	private SymbolTable() {
@@ -20,10 +22,14 @@ public class SymbolTable {
 	}
 
 
-	/** Global scope, here goes all constants, function, procedures **/
+	/**
+	 * Global scope, here goes all constants, function, procedures
+	 **/
 	public static final Scope GLOBAL_SCOPE = new Scope(null, "Global");
 
-	/** Public instance of the singleton, symbol table needs to be seen in whole project so it singleton **/
+	/**
+	 * Public instance of the singleton, symbol table needs to be seen in whole project so it singleton
+	 **/
 	public static final SymbolTable SYMBOL_TABLE = new SymbolTable();
 
 	@Override
@@ -163,6 +169,36 @@ public class SymbolTable {
 	 */
 	public void putSymbol(Scope scope, Symbol symbol) {
 		this.symbolTable.get(scope).put(symbol.identifier(), symbol);
+	}
+
+	/**
+	 * Shorthand for creating local variables instead of the bulky {@code putSymbol}
+	 *
+	 * @param scope Scope to put the variable in
+	 * @param name  Name of the variable
+	 * @return Symbol referencing the local variable
+	 */
+	public Symbol putLocalVariable(Scope scope, String name) {
+		// +3 because of reserved pointers
+		var res = new Symbol(0, name, Symbol.SymbolType.VARIABLE, scope.getLocalVariableCount() + 3);
+		this.symbolTable.get(scope).put(name, res);
+		return res;
+	}
+
+	/**
+	 * Creates an anonymouse variable which is guaranteed to be unused in the scope.
+	 * Useful for things like loops
+	 *
+	 * @param scope Scope to create the variable in
+	 * @return The symbol referencing the anonymous variable
+	 */
+	public Symbol putAnonymousVariable(Scope scope) {
+		var anonname = "Anonvar";
+		var r = new Random();
+		while (this.symbolTable.get(scope).containsKey(anonname)) {
+			anonname = "Anonvar " + r.nextInt();
+		}
+		return this.putLocalVariable(scope, anonname);
 	}
 
 	/**

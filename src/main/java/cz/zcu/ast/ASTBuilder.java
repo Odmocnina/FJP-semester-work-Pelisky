@@ -244,8 +244,9 @@ public class ASTBuilder extends CustomLangBaseVisitor<IAstNode> {
         IAstNode initExpression = visit(ctx.expr(0));
         IAstNode toExpression = visit(ctx.expr(1));
         IAstNode body = visit(ctx.block());
+        String varname = ctx.ID().getText();
 
-        return new ForNode(initExpression, toExpression, body);
+        return new ForNode(initExpression, toExpression, body, varname);
     }
 
     /**

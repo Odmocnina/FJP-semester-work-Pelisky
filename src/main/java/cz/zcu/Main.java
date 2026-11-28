@@ -37,10 +37,17 @@ public class Main {
 				Program HelloWorld;
 				
 				Code {
-				    var int a := 33;
-				    var int b := a;
-				    var int c := +(a, b);
-				    WriteLn(c);
+					var int a := 1;
+					// A -> Z+1
+				    for (x : 65 -> 91) do {
+				    	var int b := +(a,1);
+				    	WriteLn(x);
+				    	WriteLn(10);
+				    	WriteLn(+(a,x));
+				    	WriteLn(10);
+				    	WriteLn(+(x,b));
+				    	WriteLn(10);
+				    }
 				}""");
 
         // make a tokes from our input code

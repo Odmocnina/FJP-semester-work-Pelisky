@@ -103,7 +103,7 @@ assignStat
 // cycles
 
 forStat
-    : FOR LPAREN expr ARROW expr RPAREN DO block
+    : FOR LPAREN ID COLON expr ARROW expr RPAREN DO block
     ;
 
 whileStat

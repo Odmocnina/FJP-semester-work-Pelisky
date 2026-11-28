@@ -2,6 +2,7 @@ package cz.zcu.ast.nodes;
 
 import cz.zcu.codegen.instructions.*;
 import cz.zcu.exceptions.NotImplemented;
+import cz.zcu.symboltable.Symbol;
 import cz.zcu.symboltable.SymbolTable;
 
 import java.lang.classfile.instruction.LoadInstruction;
@@ -29,17 +30,28 @@ public class ForNode implements IAstNode {
     /** commands under the for **/
     public IAstNode body;
 
+    /** name of the variable where the current loop value is held **/
+    public String iteratorName;
+
+	/** the scope this for loop creates */
+	private SymbolTable.Scope myscope = null;
+
+	/** Symbol for locating the endpoint value of the for loop */
+	private Symbol toexpr = null;
+
     /**
      * Creates a new for node with the given initial expression, to expression, and body.
      *
      * @param initExpression the initial value expression for the loop
      * @param toExpression the end value expression for the loop
      * @param body the commands to execute within the for loop
+     * @param iteratorName the name of the variable that will track the current loop value
      **/
-    public ForNode(IAstNode initExpression, IAstNode toExpression, IAstNode body) {
+    public ForNode(IAstNode initExpression, IAstNode toExpression, IAstNode body, String iteratorName) {
         this.initExpression = initExpression;
         this.toExpression = toExpression;
         this.body = body;
+        this.iteratorName = iteratorName;
     }
 
     /**
@@ -50,9 +62,13 @@ public class ForNode implements IAstNode {
      **/
     @Override
     public void analyze(SymbolTable.Scope tableOfCurrentScope) throws Exception {
-        initExpression.analyze(tableOfCurrentScope);
-        toExpression.analyze(tableOfCurrentScope);
-        body.analyze(tableOfCurrentScope);
+		myscope = SymbolTable.SYMBOL_TABLE.pushScope();
+        initExpression.analyze(myscope);
+        toExpression.analyze(myscope);
+        SymbolTable.SYMBOL_TABLE.putLocalVariable(myscope, iteratorName);
+		this.toexpr = SymbolTable.SYMBOL_TABLE.putAnonymousVariable(myscope);
+		body.analyze(myscope);
+		SymbolTable.SYMBOL_TABLE.popScope();
     }
 
     /**
@@ -64,48 +80,43 @@ public class ForNode implements IAstNode {
     @Override
     public List<Instruction> generate(SymbolTable.Scope tableOfCurrentScope) {
         var instr = new ArrayList<Instruction>();
+		instr.add(new IntInstruction(2)); // from and to values
 
-        int id = labelCounter++;
+		// store initial expression
+		instr.addAll(initExpression.generate(myscope));
+		var itersymbol = SymbolTable.SYMBOL_TABLE.getSymbolLocalOnly(myscope, this.iteratorName);
+		instr.add(new StoreInstruction(0, itersymbol.address()));
 
-        LabelInstruction startLabel = new LabelInstruction("FOR_START_" + id);
-        LabelInstruction endLabel = new LabelInstruction("FOR_END_" + id);
+		// store ending barrier expression
+		instr.addAll(toExpression.generate(myscope));
+		instr.add(new StoreInstruction(0,toexpr.address()));
 
-        int baseOffset = 3 + tableOfCurrentScope.getLocalVariableCount();
-        int counterAddress = baseOffset;   // address of the value for for-cycle counter
-        int limitAddress = baseOffset + 1;   // address for the value of the for-cycle roof
+		var endlab = new LabelInstruction("forend");
 
-        // save 2 spaces at the stack for end and beginning of for
-        instr.add(new IntInstruction(2));
+		var startlabl = new LabelInstruction("forstart");
+		instr.add(startlabl);
 
-        // get the starting value and store in
-        instr.addAll(initExpression.generate(tableOfCurrentScope));
-        instr.add(new StoreInstruction(0, counterAddress));
+		// check loop end
+		instr.add(new LodInstruction(itersymbol));
+		instr.add(new LodInstruction(toexpr));
+		instr.add(new OperationInstruction(OperationPar.OPS.LES));
+		// end if !(curloop < endexpr)
+		instr.add(new CondJumpInstruction(endlab.getPar()));
 
-        // get the ending value and store it
-        instr.addAll(toExpression.generate(tableOfCurrentScope));
-        instr.add(new StoreInstruction(0, limitAddress));
+		// body comes only after the first check
+		instr.addAll(body.generate(myscope));
 
-        // getting the start of the cycle and check of the ending condition
-        instr.add(startLabel);
-        instr.add(new LodInstruction(counterAddress));
-        instr.add(new LodInstruction(limitAddress));
-        instr.add(new OperationInstruction(OperationPar.OPS.LEQ));
-        // counter <= limit
-        instr.add(new CondJumpInstruction(endLabel.getPar())); // if true continue with the cycle if false, jump
+		// increment loop counter
+		instr.add(new LodInstruction(itersymbol));
+		instr.add(new LitInstruction(1));
+		instr.add(new OperationInstruction(OperationPar.OPS.ADD));
+		instr.add(new StoreInstruction(0, itersymbol.address()));
 
-        // generate the body of the for cycle
-        instr.addAll(body.generate(tableOfCurrentScope));
 
-        // increase the for-cycle counter by 1
-        instr.add(new LodInstruction(counterAddress));
-        instr.add(new LitInstruction(1));
-        instr.add(new OperationInstruction(OperationPar.OPS.ADD));
-        instr.add(new StoreInstruction(0, counterAddress));
+		// always jump to start after first init since that's where the check for ending the loop is
+		instr.add(new JumpInstruction(startlabl.getPar()));
 
-        // jump to the start of for and clearing of the memory
-        instr.add(new JumpInstruction(startLabel.getPar()));
-        instr.add(endLabel);
-        instr.add(new IntInstruction(-2));
+		instr.add(endlab);
 
         return instr;
     }
