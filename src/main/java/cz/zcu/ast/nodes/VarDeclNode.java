@@ -2,7 +2,7 @@ package cz.zcu.ast.nodes;
 
 import cz.zcu.codegen.instructions.Instruction;
 import cz.zcu.codegen.instructions.StoreInstruction;
-import cz.zcu.exceptions.NotImplemented;
+import cz.zcu.exceptions.VariableRedeclaration;
 import cz.zcu.symboltable.Symbol;
 import cz.zcu.symboltable.SymbolTable;
 
@@ -59,6 +59,9 @@ public class VarDeclNode implements IAstNode {
             this.expression.analyze(tableOfCurrentScope);
         }
 
+        if (SymbolTable.SYMBOL_TABLE.getSymbolLocalOnly(tableOfCurrentScope, this.name) != null) {
+            throw new VariableRedeclaration(this.name);
+        }
         // +3 since the first three spots are always reserved
         SymbolTable.SYMBOL_TABLE.putSymbol(tableOfCurrentScope, new Symbol(0, this.name, Symbol.SymbolType.VARIABLE, tableOfCurrentScope.getLocalVariableCount()+3));
     }

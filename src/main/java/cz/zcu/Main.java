@@ -37,8 +37,10 @@ public class Main {
 				Program HelloWorld;
 				
 				Code {
-				    var int a := 12;
-				    if (=(1,1)) then { if (!=(2,2)) then {var int x:= 111;} else {var int y:=1231;} } else { var int c := 14; }
+				    var int a := 33;
+				    var int b := a;
+				    var int c := +(a, b);
+				    WriteLn(c);
 				}""");
 
         // make a tokes from our input code
