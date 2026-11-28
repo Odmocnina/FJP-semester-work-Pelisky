@@ -37,20 +37,8 @@ public class Main {
 				Program HelloWorld;
 				
 				Code {
-				    //WriteLn("Hello World!");
-				   // ReadLn();
-				   // WriteLn(+(1, 2));
-				   // WriteLn(/(4, 2));
-				  //  WriteLn(*(6, 7));
-				   // if (=(1,2)) then { WriteLn(48); } else { WriteLn(49); }
-				   // if (!=(1,2)) then { WriteLn(48); }
-				    var real a := 1.1;
-				    var real b := -6.7;
-				    
-				    for (1->5) do {
-				        var int v := +(1, 1);
-				    }
-				    // minus is not implemented
+				    var int a := 12;
+				    if (=(1,1)) then { if (!=(2,2)) then {var int x:= 111;} else {var int y:=1231;} } else { var int c := 14; }
 				}""");
 
         // make a tokes from our input code

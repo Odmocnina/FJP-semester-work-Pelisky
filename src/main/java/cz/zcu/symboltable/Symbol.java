@@ -7,7 +7,7 @@ package cz.zcu.symboltable;
  * @param identifier Identifikator symbolu (tzn. jmeno)
  * @param type       Druh symbolu, dostupne typy zde - {@link SymbolType}
  */
-public record Symbol(int level, String identifier, SymbolType type) {
+public record Symbol(int level, String identifier, SymbolType type, int address) {
 
 	public enum SymbolType {
 		VARIABLE, FUNCTION

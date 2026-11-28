@@ -20,6 +20,7 @@ public class BlockNode implements IAstNode {
 
     /** List of commands that are in the block **/
     public List<IAstNode> statements = new ArrayList<>();
+    private SymbolTable.Scope myscope = null;
 
     /**
      * Function for checking the semantic of the block of code, checks the semantic of all commands in it
@@ -30,10 +31,10 @@ public class BlockNode implements IAstNode {
     @Override
     public void analyze(SymbolTable.Scope tableOfCurrentScope) throws Exception {
         // Block itself cannot be wrong that is chacked by the grammar, commands in it might be
-        var blockscope = SymbolTable.SYMBOL_TABLE.pushScope();
+        myscope = SymbolTable.SYMBOL_TABLE.pushScope();
         // analyze and connect in the right order
         for (IAstNode statement : statements) {
-            statement.analyze(blockscope);
+            statement.analyze(myscope);
         }
         // but extract all declarations to the top for codegen for easier access
         // and assign addresses
@@ -61,7 +62,7 @@ public class BlockNode implements IAstNode {
         var nodecls = statements.stream().filter(node -> (node instanceof VarDeclNode)).count();
         instr.add(new IntInstruction(nodecls));
         for (IAstNode statement : statements) {
-            instr.addAll(statement.generate(tableOfCurrentScope));
+            instr.addAll(statement.generate(myscope));
         }
         instr.add(new IntInstruction(-nodecls));
         return instr;

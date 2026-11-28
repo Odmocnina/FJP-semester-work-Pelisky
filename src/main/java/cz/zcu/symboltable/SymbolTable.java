@@ -225,6 +225,7 @@ public class SymbolTable {
 					}
 				}
 				current = current.getParent();
+				// TODO: break when scope is a function boundary
 			}
 			return count;
 		}

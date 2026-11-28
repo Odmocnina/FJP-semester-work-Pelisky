@@ -59,7 +59,8 @@ public class VarDeclNode implements IAstNode {
             this.expression.analyze(tableOfCurrentScope);
         }
 
-        SymbolTable.SYMBOL_TABLE.putSymbol(tableOfCurrentScope, new Symbol(0, this.name, Symbol.SymbolType.VARIABLE));
+        // +3 since the first three spots are always reserved
+        SymbolTable.SYMBOL_TABLE.putSymbol(tableOfCurrentScope, new Symbol(0, this.name, Symbol.SymbolType.VARIABLE, tableOfCurrentScope.getLocalVariableCount()+3));
     }
 
     /**
@@ -77,7 +78,7 @@ public class VarDeclNode implements IAstNode {
         // this is for situation when the node being assigned returns unchangeable list
         var instructs = new ArrayList<>(this.expression.generate(tableOfCurrentScope));
         // variables are always local
-        instructs.add(new StoreInstruction(0, this.address));
+        instructs.add(new StoreInstruction(0, SymbolTable.SYMBOL_TABLE.getSymbolLocalOnly(tableOfCurrentScope, this.name).address()));
         return instructs;
     }
 }
